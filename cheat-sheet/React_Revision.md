@@ -29,4 +29,23 @@ A.
 | **Example**                 | ```jsx<br>class Greeting extends React.Component {<br>  constructor(props) {<br>    super(props);<br>    this.state = { message: "Hello, " + props.name + "!" };<br>  }<br>  render() {<br>    return <h1>{this.state.message}</h1>;<br>  }<br>}``` | ```jsx<br>import React, { useState, useEffect } from 'react';<br>function Greeting({ name }) {<br>  const [message, setMessage] = useState("Hello, " + name + "!");<br>  useEffect(() => {<br>    console.log("Component mounted or updated");<br>    return () => {<br>      console.log("Component unmounted");<br>    };<br>  }, [message]);<br>  return <h1>{message}</h1>;<br>}``` |
 | **Conclusion**              | Class components are still widely used but are less preferred in modern React development                                        | Functional components provide a cleaner, more intuitive way to manage state and side effects and are the standard today |
 
-
+q3. What is the Virtual DOM, and how does React use it to optimize performance?
+Ans:
+- Virtual DOM is a lightweight in-memory representation of the real DOM. It is a JavaScript object that mirrors the structure of the actual DOM elements.
+- The primary goal of the Virtual DOM is to optimize the performance of UI updates by minimizing direct manipulations of the real DOM, which are typically costly in terms of performance.
+- How the Virtual DOM Works:
+1. Initial Rendering:
+  - When a React application is first rendered, React creates a Virtual DOM tree that corresponds to the real DOM.
+  - The real DOM is then updated based on this initial Virtual DOM tree.
+2. State Changes:
+  - When the state or props of a component change, React re-renders the Virtual DOM tree for that component.
+  - React does not directly manipulate the real DOM. Instead, it updates the Virtual DOM to reflect these changes.
+3. Diffing Algorithm:
+  - React compares the updated Virtual DOM with the previous Virtual DOM to identify the differences (or “diffs”).
+  - This comparison is done using an efficient diffing algorithm, which operates in O(n) time complexity, where n is the number of elements.
+4. Reconciliation:
+  - Once the differences are identified, React determines the minimal set of changes required to update the real DOM.
+  - This process is known as reconciliation. React applies these changes in batch, minimizing direct DOM manipulations.
+5. Updating the Real DOM:
+  - React updates only the parts of the real DOM that have changed, rather than re-rendering the entire DOM tree.
+  - This selective update process significantly reduces the number of operations performed on the real DOM, improving performance.
